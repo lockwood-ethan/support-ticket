@@ -40,7 +40,8 @@ public class User {
     @LastModifiedDate
     private Instant lastModifiedDate;
 
-    public User(@NonNull String email, @NonNull String password, @NonNull Instant createdDate, @NonNull Instant lastModifiedDate) {
+    public User(UUID id, @NonNull String email, @NonNull String password, @NonNull Instant createdDate, @NonNull Instant lastModifiedDate) {
+        this.id = id;
         this.email = email;
         this.password = password;
         this.createdDate = createdDate;

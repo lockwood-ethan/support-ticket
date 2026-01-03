@@ -20,7 +20,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody RegistrationRequest registrationRequest) {
-        User newUser = new User(registrationRequest.getEmail(), registrationRequest.getPassword(), Instant.now(), Instant.now());
+        User newUser = new User(null, registrationRequest.getEmail(), registrationRequest.getPassword(), Instant.now(), Instant.now());
         User savedUser = userRepository.save(newUser);
         return ResponseEntity.ok().body(savedUser);
     }
