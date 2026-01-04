@@ -1,7 +1,7 @@
 package com.support.ticket.controllers;
 
 import com.support.ticket.models.Ticket;
-import com.support.ticket.models.User;
+import com.support.ticket.models.UserEntity;
 import com.support.ticket.payload.TicketRequest;
 import com.support.ticket.repositories.TicketRepository;
 import com.support.ticket.repositories.UserRepository;
@@ -29,28 +29,26 @@ public class TicketController {
     @GetMapping
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> getAllUserTickets(@AuthenticationPrincipal Jwt jwt) {
-        User user = getOrCreateUser(jwt);
-        List<Ticket> tickets = ticketRepository.findAllByAuthorId(user.getId());
+        UserEntity userEntity = getOrCreateUser(jwt);
+        List<Ticket> tickets = ticketRepository.findAllByAuthorId(userEntity.getId());
         return ResponseEntity.ok(tickets);
     }
 
     @PostMapping
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> createTicket(@AuthenticationPrincipal Jwt jwt, @RequestBody TicketRequest ticketRequest) {
-        User user = getOrCreateUser(jwt);
-        Ticket ticket = new Ticket(null, user.getId(), ticketRequest.getTitle(), ticketRequest.getBody(), Instant.now());
+        UserEntity userEntity = getOrCreateUser(jwt);
+        Ticket ticket = new Ticket(null, userEntity.getId(), ticketRequest.getTitle(), ticketRequest.getBody(), Instant.now());
         ticketRepository.save(ticket);
         return ResponseEntity.ok(ticket);
     }
 
-    private User getOrCreateUser(Jwt jwt) {
+    private UserEntity getOrCreateUser(Jwt jwt) {
         String auth0Id = jwt.getSubject();
         return userRepository.findByAuth0Id(auth0Id)
                 .orElseGet(() -> {
-                    User newUser = new User();
-                    newUser.setAuth0Id(auth0Id);
-                    newUser.setCreatedDate(Instant.now());
-                    return userRepository.save(newUser);
+                    UserEntity newUserEntity = new UserEntity(null, auth0Id, Instant.now());
+                    return userRepository.save(newUserEntity);
                 });
     }
 }

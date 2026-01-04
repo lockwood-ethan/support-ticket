@@ -13,7 +13,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-public class User {
+public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -25,15 +25,12 @@ public class User {
     @CreatedDate
     private Instant createdDate;
 
-    public User(UUID id, String auth0Id, Instant createdDate) {
+    public UserEntity(UUID id, String auth0Id, Instant createdDate) {
         this.id = id;
         this.auth0Id = auth0Id;
         this.createdDate = createdDate;
     }
 
-    public User() {}
+    public UserEntity() {}
 
-    public User orElseGet(Object o) {
-        return null;
-    }
 }
