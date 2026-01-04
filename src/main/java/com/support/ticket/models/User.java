@@ -3,13 +3,10 @@ package com.support.ticket.models;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
@@ -22,31 +19,21 @@ public class User {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @NonNull
     @Column(unique = true)
-    private String email;
+    private String auth0Id;
 
-    @NonNull
-    @Column
-    private String password;
-
-    @NonNull
-    @Column
     @CreatedDate
     private Instant createdDate;
 
-    @NonNull
-    @Column
-    @LastModifiedDate
-    private Instant lastModifiedDate;
-
-    public User(UUID id, @NonNull String email, @NonNull String password, @NonNull Instant createdDate, @NonNull Instant lastModifiedDate) {
+    public User(UUID id, String auth0Id, Instant createdDate) {
         this.id = id;
-        this.email = email;
-        this.password = password;
+        this.auth0Id = auth0Id;
         this.createdDate = createdDate;
-        this.lastModifiedDate = lastModifiedDate;
     }
 
     public User() {}
+
+    public User orElseGet(Object o) {
+        return null;
+    }
 }

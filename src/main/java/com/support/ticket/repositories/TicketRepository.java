@@ -1,13 +1,13 @@
 package com.support.ticket.repositories;
 
-import com.support.ticket.models.User;
+import com.support.ticket.models.Ticket;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import java.util.List;
 import java.util.UUID;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, UUID> {
-    Optional<User> findByAuth0Id(String auth0Id);
+public interface TicketRepository extends JpaRepository<Ticket, UUID> {
+    List<Ticket> findAllByAuthorId(UUID authorId);
 }
