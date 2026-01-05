@@ -8,11 +8,11 @@ import lombok.Setter;
 @Getter
 @Setter
 public class TicketRequest {
-    String title;
+    String subject;
     String body;
 
-    TicketRequest(String title, String body) {
-        this.title = title;
+    public TicketRequest(String subject, String body) {
+        this.subject = subject;
         this.body = body;
     }
 }

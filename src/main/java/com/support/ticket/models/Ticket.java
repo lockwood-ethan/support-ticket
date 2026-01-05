@@ -18,6 +18,9 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @Column(name = "ticket_number" ,unique = true, nullable = false, updatable = false)
+    private Long ticketNumber;
+
     private UUID authorId;
 
     @Column(columnDefinition = "TEXT")
@@ -31,8 +34,9 @@ public class Ticket {
 
     public Ticket() {}
 
-    public Ticket(UUID id, UUID authorId, String subject, String body, Instant createdDate) {
+    public Ticket(UUID id, Long ticketNumber, UUID authorId, String subject, String body, Instant createdDate) {
         this.id = id;
+        this.ticketNumber = ticketNumber;
         this.authorId = authorId;
         this.subject = subject;
         this.body = body;
