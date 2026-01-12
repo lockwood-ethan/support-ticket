@@ -38,7 +38,14 @@ public class TicketController {
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> createTicket(@AuthenticationPrincipal Jwt jwt, @RequestBody TicketRequest ticketRequest) {
         UserEntity userEntity = getOrCreateUser(jwt);
-        Ticket ticket = new Ticket(null, userEntity.getId(), ticketRequest.getSubject(), ticketRequest.getBody(), Instant.now());
+        Ticket ticket = new Ticket(null,
+                userEntity.getId(),
+                ticketRequest.getSubject(),
+                ticketRequest.getBody(),
+                ticketRequest.getTicketStatus(),
+                ticketRequest.getTicketPriority(),
+                Instant.now(),
+                Instant.now());
         ticketRepository.save(ticket);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
