@@ -1,0 +1,2 @@
+ALTER TABLE ticket
+    ADD updated_date TIMESTAMP WITHOUT TIME ZONE;

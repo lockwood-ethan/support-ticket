@@ -4,7 +4,7 @@ import com.support.ticket.models.Ticket;
 import com.support.ticket.models.UserEntity;
 import com.support.ticket.payload.TicketRequest;
 import com.support.ticket.repositories.TicketRepository;
-import com.support.ticket.repositories.UserRepository;
+import com.support.ticket.repositories.UserEntityRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,11 +20,11 @@ import java.util.List;
 public class TicketController {
 
     private final TicketRepository ticketRepository;
-    private final UserRepository userRepository;
+    private final UserEntityRepository userEntityRepository;
 
-    public TicketController(TicketRepository ticketRepository, UserRepository userRepository) {
+    public TicketController(TicketRepository ticketRepository, UserEntityRepository userEntityRepository) {
         this.ticketRepository = ticketRepository;
-        this.userRepository = userRepository;
+        this.userEntityRepository = userEntityRepository;
     }
 
     @GetMapping
@@ -52,10 +52,10 @@ public class TicketController {
 
     private UserEntity getOrCreateUser(Jwt jwt) {
         String auth0Id = jwt.getSubject();
-        return userRepository.findByAuth0Id(auth0Id)
+        return userEntityRepository.findByAuth0Id(auth0Id)
                 .orElseGet(() -> {
                     UserEntity newUserEntity = new UserEntity(null, auth0Id, Instant.now());
-                    return userRepository.save(newUserEntity);
+                    return userEntityRepository.save(newUserEntity);
                 });
     }
 }
