@@ -2,6 +2,7 @@ package com.support.ticket.models;
 
 import com.support.ticket.enums.TicketPriority;
 import com.support.ticket.enums.TicketStatus;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
@@ -26,6 +27,9 @@ public class Ticket {
 
     private UUID authorId;
 
+    @Nullable
+    private UUID assignedTo;
+
     @Column(columnDefinition = "TEXT")
     private String subject;
 
@@ -44,9 +48,10 @@ public class Ticket {
 
     public Ticket() {}
 
-    public Ticket(UUID id, UUID authorId, String subject, String body, TicketStatus ticketStatus, TicketPriority ticketPriority, Instant createdDate, Instant updatedDate) {
+    public Ticket(UUID id, UUID authorId, UUID assignedTo, String subject, String body, TicketStatus ticketStatus, TicketPriority ticketPriority, Instant createdDate, Instant updatedDate) {
         this.id = id;
         this.authorId = authorId;
+        this.assignedTo = assignedTo;
         this.subject = subject;
         this.body = body;
         this.ticketStatus = ticketStatus;

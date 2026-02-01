@@ -1,5 +1,6 @@
 package com.support.ticket.models;
 
+import com.support.ticket.enums.Role;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
@@ -25,10 +26,13 @@ public class UserEntity {
     @CreatedDate
     private Instant createdDate;
 
-    public UserEntity(UUID id, String auth0Id, Instant createdDate) {
+    private Role role;
+
+    public UserEntity(UUID id, String auth0Id, Instant createdDate, Role role) {
         this.id = id;
         this.auth0Id = auth0Id;
         this.createdDate = createdDate;
+        this.role = role;
     }
 
     public UserEntity() {}
